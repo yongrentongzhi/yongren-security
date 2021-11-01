@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR" monitorInterval="1">
+    <Properties>
+        <Property name="LOG_HOME">./logs</Property>
+        <property name="FILE_NAME">/yongren-security-server-jwt</property>
+        <property name="patternLayout">[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread-%tid] [%c] [%X{hostName}]
+            [%X{applicationName}] [%m] ## '%ex' %n
+        </property>
+        <property name="filePatternExample">$${date:yyyy-MM}/%d{dd}-%i.log</property>
+    </Properties>
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${patternLayout}"/>
+        </Console>
+
+        <RollingRandomAccessFile name="infoAppender" fileName="${LOG_HOME}/${FILE_NAME}-info.log"
+                                 filePattern="${LOG_HOME}/${FILE_NAME}-info/${filePatternExample}">
+            <PatternLayout pattern="${patternLayout}"/>
+            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="14"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="debugAppender" fileName="${LOG_HOME}/${FILE_NAME}-debug.log"
+                                 filePattern="${LOG_HOME}/${FILE_NAME}-debug/${filePatternExample}">
+            <PatternLayout pattern="${patternLayout}"/>
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="14"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="errorAppender" fileName="${LOG_HOME}/${FILE_NAME}-error.log"
+                                 filePattern="${LOG_HOME}/${FILE_NAME}-error/${filePatternExample}">
+            <PatternLayout pattern="${patternLayout}"/>
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy interval="1"/>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="14"/>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <!-- 业务相关 同步步logger -->
+        <Logger name="sync"  includeLocation="false" additivity="false">
+            <AppenderRef ref="CONSOLE" />
+            <AppenderRef ref="debugAppender" />
+            <AppenderRef ref="infoAppender"/>
+            <AppenderRef ref="errorAppender"/>
+        </Logger>
+
+        <Logger name="org"  level="ERROR" includeLocation="false" additivity="false">
+            <AppenderRef ref="CONSOLE" />
+            <AppenderRef ref="errorAppender"/>
+        </Logger>
+        <Logger name="_org.springframework"  level="ERROR" includeLocation="false" additivity="false">
+            <AppenderRef ref="CONSOLE" />
+            <AppenderRef ref="errorAppender"/>
+        </Logger>
+        <Logger name="com.baomidou.mybatisplus"  level="info" includeLocation="false" additivity="false">
+            <AppenderRef ref="CONSOLE" level="error"/>
+            <AppenderRef ref="errorAppender"/>
+        </Logger>
+        <Logger name="springfox"  level="info" includeLocation="false" additivity="false">
+            <AppenderRef ref="CONSOLE" level="error"/>
+            <AppenderRef ref="errorAppender"/>
+        </Logger>
+        <Logger name="springfox"  level="info" includeLocation="false" additivity="false">
+            <AppenderRef ref="CONSOLE" level="error"/>
+            <AppenderRef ref="errorAppender"/>
+        </Logger>
+
+        <AsyncRoot level="debug">
+            <AppenderRef ref="CONSOLE" />
+            <AppenderRef ref="debugAppender" />
+            <AppenderRef ref="infoAppender"/>
+            <AppenderRef ref="errorAppender"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>

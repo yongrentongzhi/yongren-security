@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.105.89:3306/yongren?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: hduap001
+
+  application:
+    name: security-server-jwt
+
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: admin
+
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+      additional-paths: src/main/java #重启目录
+
+server:
+  port: 8081
+yongren:
+  swagger:
+    properties:
+      docket-group:
+        product:
+          title: security-server-jwt
+          group: 权限管理服务端
+          description: 权限管理服务端
+          version: 1.0
+          contactInfo:
+            name: yongren
+            url:
+            email:
+          basePackage: com.yongren.security.server.controller

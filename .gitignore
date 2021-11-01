@@ -1,0 +1,4 @@
+# 项目排除路径
+/yongren-security-client-jwt/target/
+/yongren-security-common/target/
+/yongren-security-server-jwt/target/

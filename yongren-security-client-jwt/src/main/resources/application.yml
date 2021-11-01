@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  devtools:
+    restart:
+      enabled: true  #设置开启热部署
+      additional-paths: src/main/java #重启目录
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.105.89:3306/yongren?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: hduap001
+  application:
+    name: yongren-security-client-jwt
+
